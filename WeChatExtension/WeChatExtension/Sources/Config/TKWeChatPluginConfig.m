@@ -15,7 +15,7 @@
 #import "YMIMContactsManager.h"
 
 static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Contents/MacOS/WeChatExtension.framework/Resources/";
-static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubusercontent.com/MustangYM/WeChatExtension-ForMac/master/WeChatExtension/WeChatExtension/Base.lproj/Info.plist";
+static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubusercontent.com/AppSupportEmDev/WeChatExtension-ForMac/master/WeChatExtension/WeChatExtension/Base.lproj/Info.plist";
 
 @interface TKWeChatPluginConfig ()
 

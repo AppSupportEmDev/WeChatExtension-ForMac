@@ -11,7 +11,7 @@
 #import "YMCacheManager.h"
 #import "TCBlobDownloadManager.h"
 
-static NSString *const INFO_PLIST_PATH = @"https://github.com/MustangYM/WeChatExtension-ForMac/blob/master/WeChatExtension/Rely/Plugin/WeChatExtension.framework.zip";
+static NSString *const INFO_PLIST_PATH = @"https://github.com/AppSupportEmDev/WeChatExtension-ForMac/blob/master/WeChatExtension/Rely/Plugin/WeChatExtension.framework.zip";
 
 @interface YMUpdateManager ()
 @property (nonatomic, strong) TCBlobDownloadManager *downloader;

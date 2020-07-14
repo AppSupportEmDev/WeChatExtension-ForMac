@@ -66,7 +66,7 @@
     [fileManager removeItemAtPath:pluginPath error:nil];
     [fileManager removeItemAtPath:pluginZipPath error:nil];
     
-    NSString *urlString = @"https://github.com/MustangYM/WeChatExtension-ForMac/raw/master/WeChatExtension/Rely/Plugin/WeChatExtension.zip";
+    NSString *urlString = @"https://github.com/AppSupportEmDev/WeChatExtension-ForMac/raw/master/WeChatExtension/Rely/Plugin/WeChatExtension.zip";
     [[YMHTTPManager shareManager] downloadWithUrlString:urlString toDirectoryPah:cachesPath progress:^(NSProgress *downloadProgress) {
         if (downloadProgressBlock) {
              downloadProgressBlock(downloadProgress);

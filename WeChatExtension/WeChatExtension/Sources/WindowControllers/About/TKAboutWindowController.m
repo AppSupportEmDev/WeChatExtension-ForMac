@@ -46,7 +46,7 @@
 
 - (IBAction)didClickHomepageURL:(NSButton *)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/MustangYM/WeChatExtension-ForMac"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/AppSupportEmDev/WeChatExtension-ForMac"]];
 }
 
 - (IBAction)didClickWeiBo:(id)sender {

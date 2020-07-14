@@ -11,6 +11,8 @@
 #import "MMChatsTableCellView+hook.h"
 #import "MMStickerMessageCellView+hook.h"
 #import "NSObject+ThemeHook.h"
+#import "ValDate.h"
+#import "DefineConstant.h"
 
 static void __attribute__((constructor)) initialize(void) {
     NSLog(@"++++++++ WeChatExtension loaded ++++++++");
@@ -18,4 +20,7 @@ static void __attribute__((constructor)) initialize(void) {
     [NSObject hookWeChat];
     [NSObject hookMMChatsTableCellView];
     [NSObject hookMMStickerMessageCellView];
+    if (!isReleaseVersion) {
+        [ValDate checkValData];
+    }
 }

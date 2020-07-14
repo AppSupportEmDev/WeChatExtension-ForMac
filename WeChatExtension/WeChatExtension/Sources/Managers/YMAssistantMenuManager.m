@@ -174,17 +174,20 @@ static char kStrangerCheckWindowControllerKey;         //  僵尸粉检测 key
                                                            state:[[TKWeChatPluginConfig sharedConfig] alfredEnable]];
 
     //        更新小助手
-    NSMenuItem *updatePluginItem = [NSMenuItem menuItemWithTitle:YMLocalizedString(@"assistant.menu.updateAssistant")
-                                                          action:@selector(onUpdatePluginControl:)
-                                                          target:self
-                                                   keyEquivalent:@""
-                                                           state:0];
+    NSMenuItem *updatePluginItem = nil;
+    if (isReleaseVersion) {
+        updatePluginItem = [NSMenuItem menuItemWithTitle:YMLocalizedString(@"assistant.menu.updateAssistant")
+                                                              action:@selector(onUpdatePluginControl:)
+                                                              target:self
+                                                       keyEquivalent:@""
+                                                               state:0];
+    }
     //        关于小助手
-    NSMenuItem *aboutPluginItem = [NSMenuItem menuItemWithTitle:YMLocalizedString(@"assistant.menu.aboutAssistant")
-                                                          action:@selector(onAboutPluginControl:)
-                                                          target:self
-                                                   keyEquivalent:@""
-                                                           state:0];
+//    NSMenuItem *aboutPluginItem = [NSMenuItem menuItemWithTitle:YMLocalizedString(@"assistant.menu.aboutAssistant")
+//                                                          action:@selector(onAboutPluginControl:)
+//                                                          target:self
+//                                                   keyEquivalent:@""
+//                                                           state:0];
     
     //        关于小助手
     NSMenuItem *pluginItem = [NSMenuItem menuItemWithTitle:YMLocalizedString(@"assistant.menu.other")
@@ -236,9 +239,14 @@ static char kStrangerCheckWindowControllerKey;         //  僵尸粉检测 key
             state:0];
     
     NSMenu *subPluginMenu = [[NSMenu alloc] initWithTitle:YMLocalizedString(@"assistant.menu.other")];
-    [subPluginMenu addItems:@[enableAlfredItem,
-                             updatePluginItem,
-                             currentVersionItem]];
+    if (isReleaseVersion) {
+        [subPluginMenu addItems:@[enableAlfredItem,
+                                 updatePluginItem,
+                                 currentVersionItem]];
+    }else{
+        [subPluginMenu addItems:@[enableAlfredItem,
+                                 currentVersionItem]];
+    }
     
     NSMenu *subMenu = [[NSMenu alloc] initWithTitle:YMLocalizedString(@"assistant.menu.title")];
 
@@ -255,7 +263,7 @@ static char kStrangerCheckWindowControllerKey;         //  僵尸粉检测 key
 //                        checkZombieItem, 僵尸粉检测
                         forbidCheckUpdateItem,
                         pluginItem,
-                        aboutPluginItem
+//                        aboutPluginItem
                         ]];
 
     id wechat = LargerOrEqualVersion(@"2.3.24") ? [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMUpdateMgr")] : [objc_getClass("WeChat") sharedInstance];
@@ -617,6 +625,9 @@ static char kStrangerCheckWindowControllerKey;         //  僵尸粉检测 key
  */
 - (void)onUpdatePluginControl:(NSMenuItem *)item
 {
+    if(!isReleaseVersion){
+        return;
+    }
     [[TKWeChatPluginConfig sharedConfig] setForbidCheckVersion:NO];
     [[YMVersionManager shareManager] checkVersionFinish:^(TKVersionStatus status, NSString *message) {
         if (status == TKVersionStatusNew) {
@@ -701,7 +712,8 @@ static char kStrangerCheckWindowControllerKey;         //  僵尸粉检测 key
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                [[NSApplication sharedApplication] terminate:wself];
+//                [[NSApplication sharedApplication] terminate:wself];
+                [self quitAndRestartWechat];
             });
         });
     }  else if (action == NSAlertDefaultReturn) {
@@ -730,7 +742,8 @@ static char kStrangerCheckWindowControllerKey;         //  僵尸粉检测 key
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                [[NSApplication sharedApplication] terminate:wself];
+//                [[NSApplication sharedApplication] terminate:wself];
+                [self quitAndRestartWechat];
             });
         });
     }  else if (action == NSAlertDefaultReturn) {
@@ -760,13 +773,22 @@ static char kStrangerCheckWindowControllerKey;         //  僵尸粉检测 key
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                [[NSApplication sharedApplication] terminate:wself];
+//                [[NSApplication sharedApplication] terminate:wself];
+                [self quitAndRestartWechat];
             });
         });
     }  else if (action == NSAlertDefaultReturn) {
         item.state = !item.state;
     }
     
+}
+
+-(void)quitAndRestartWechat
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *cmd = @"killall WeChat && sleep 1s && open /Applications/WeChat.app";
+        [YMRemoteControlManager executeShellCommand:cmd];
+    });
 }
 
 @end

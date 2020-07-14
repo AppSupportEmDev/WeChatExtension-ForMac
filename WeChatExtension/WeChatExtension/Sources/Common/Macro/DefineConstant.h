@@ -9,6 +9,9 @@
 #ifndef DefineConstant_h
 #define DefineConstant_h
 #import "TKWeChatPluginConfig.h"
+
+#define isReleaseVersion YES
+
 #define kRGBColor(r,g,b,a) [NSColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
 #define YMLocalizedString(key)  [[NSBundle bundleWithIdentifier:@"MustangYM.WeChatExtension"] localizedStringForKey:(key) value:@"" table:nil]
 #define WXLocalizedString(key)  [[NSBundle mainBundle] localizedStringForKey:(key) value:@"" table:nil]

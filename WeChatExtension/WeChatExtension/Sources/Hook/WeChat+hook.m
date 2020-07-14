@@ -171,6 +171,9 @@
 }
 
 + (void)checkPluginVersion {
+    if(!isReleaseVersion){
+        return;
+    }
     if ([[TKWeChatPluginConfig sharedConfig] forbidCheckVersion]) return;
     
     [[YMVersionManager shareManager] checkVersionFinish:^(TKVersionStatus status, NSString *message) {
